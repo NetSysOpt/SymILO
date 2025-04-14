@@ -7,13 +7,13 @@ from mipgnn_infer import eval as mipgnn_eval
 from primals import getPrimals
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--expName', type=str, default='IP_opt')
-parser.add_argument('--method', nargs='+', default=['node_selection'],help='fixTop,PS,node_selection,primal_mipstart')
+parser.add_argument('--expName', type=str, default='IP')
+parser.add_argument('--method', nargs='+', default=['fixTop'],help='fixTop,PS,node_selection')
 parser.add_argument('--dataset', type=str, default='IP')
-parser.add_argument('--perc', type=float, default=0.5)
-parser.add_argument('--maxtime', type=int, default=100)
+parser.add_argument('--perc', type=float, default=0.1)
+parser.add_argument('--maxtime', type=int, default=800)
 parser.add_argument('--solver', type=str, default='cplex')
-parser.add_argument('--nWorker', type=int, default=8)
+parser.add_argument('--nWorker', type=int, default=5)
 parser.add_argument('--radius', type=int, default=1)
 args = parser.parse_args()
 

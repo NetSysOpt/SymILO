@@ -14,7 +14,7 @@ confInfo = {
 'SMSP':{
     'name':'SMSP',
     'trainDir':'./data/datasets/SMSP/train',
-    'testDir':'./data/datasets/SMSP/train',
+    'testDir':'./data/datasets/SMSP/test',
     'nGroup':16+16,
     'reorder':reorderSMSP,
     'addPosFeature':addPosFeatureSMSP

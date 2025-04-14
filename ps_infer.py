@@ -20,8 +20,8 @@ def evaluate(filepath,prepath,exp_dir,timelimit,method,perc):
     m.parameters.emphasis.mip.set(1)
     m.parameters.mip.display.set(3)
     m.parameters.threads.set(1)
-    m.parameters.workmem.set(1024)
-    m.parameters.mip.limits.treememory.set(20000)
+    m.parameters.workmem.set(10240)
+    m.parameters.mip.limits.treememory.set(200000)
     m.parameters.mip.strategy.file.set(2)
     m.parameters.workdir.set('./temp')
 

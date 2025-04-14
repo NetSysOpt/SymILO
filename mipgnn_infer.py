@@ -298,18 +298,19 @@ def mipeval(
     zero_inds = []
     one_coefs = []
     zero_coefs = []
+
     for i in range(nvar):
-        if prediction[i]<0.000001:
+        if prediction[i]<0.00001:
             zero_inds.append(i)
             zero_coefs.append(1)
-        elif prediction[i]>0.99:
+        elif prediction[i]>0.95:
             one_inds.append(i)
             one_coefs.append(-1)
 
     instance_cpx.linear_constraints.add(
         lin_expr=[[zero_inds+one_inds, zero_coefs+one_coefs]],
         senses=['L'],
-        rhs=[len(one_coefs)],
+        rhs=[-len(one_coefs)],
         names=['fixing'])
 
     if time_rem_cplex > 0:

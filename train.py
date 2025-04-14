@@ -6,7 +6,7 @@ from nn import GNNPolicy
 from pathlib import Path
 import scipy.io as io
 import numpy as np
-from label_opt import labelOpt,lexOpt
+from label_opt import labelOpt
 import torch
 import torch.nn.functional as F
 import torch_geometric
@@ -19,10 +19,10 @@ torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--expName', type=str, default='SMSP_opt')
-parser.add_argument('--dataset', type=str, default='SMSP')
+parser.add_argument('--expName', type=str, default='IP')
+parser.add_argument('--dataset', type=str, default='IP')
 parser.add_argument('--opt', type=str, default='opt')
-parser.add_argument('--epoch', type=int, default=2)
+parser.add_argument('--epoch', type=int, default=50)
 parser.add_argument('--PE', type=str, default='Y')
 args = parser.parse_args()
 

@@ -10,17 +10,15 @@ import time
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--expName', type=str, default='SMSP_opt')
-parser.add_argument('--dataset', type=str, default='SMSP')
-parser.add_argument('--mod', type=str, default='test',help='train,test')
+parser.add_argument('--expName', type=str, default='IP')
+parser.add_argument('--dataset', type=str, default='IP')
 args = parser.parse_args()
 
 EXP_NAME = args.expName
 info = confInfo[args.dataset]
 NGROUP = info['nGroup']
-MOD = args.mod
-TEST_INS = os.path.join(info[MOD +'Dir'],'ins')
-TEST_BG = os.path.join(info[MOD + 'Dir'],'bg')
+TEST_INS = os.path.join(info['testDir'],'ins')
+TEST_BG = os.path.join(info['testDir'],'bg')
 ADDPOS = info['addPosFeature']
 REORDER = info['reorder']
 
@@ -29,7 +27,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # set exp dir
 now = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime())
-exp_dir = f'logits' if MOD=='test' else 'logits_train'
+exp_dir = f'logits'
 exp_dir = os.path.join(EXP_NAME, exp_dir)
 os.makedirs(exp_dir, exist_ok=True)
 

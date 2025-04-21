@@ -40,7 +40,7 @@ def getPrimals(exp_dir):
 
 
 if __name__ == '__main__':
-    exp_dir = r'F:\L2O_project\ICML2024\src\logs\SMSP_ori\exp-cplex-method-node_selection-perc-0-radius-1-Mt1000-2024-01-16 14-16-59'
+    exp_dir = r'exp-cplex-method-ps-perc-0-radius-1-Mt1000-2024-01-16 14-16-59'
     mean_pb,mean_solTime= getPrimals(exp_dir)
     with open(os.path.join(exp_dir, 'mean_primals.txt'), 'w+') as f:
         f.write(f'Primal Bounds:{mean_pb}\n')

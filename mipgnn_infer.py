@@ -300,7 +300,7 @@ def mipeval(
     zero_coefs = []
 
     for i in range(nvar):
-        if prediction[i]<0.00001:
+        if prediction[i]<0.000001:
             zero_inds.append(i)
             zero_coefs.append(1)
         elif prediction[i]>0.95:
@@ -332,7 +332,7 @@ args.cpx_threads = 1
 args.cpx_tmp = './cpx_tmp/'
 args.barebones = 0
 args.timelimit = 60
-args.memlimit = 1024
+args.memlimit = 10240
 args.logfile = 'log.out'
 args.freq_best = 100
 args.zero_damping = 1.0

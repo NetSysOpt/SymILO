@@ -19,10 +19,10 @@ torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--expName', type=str, default='IP')
-parser.add_argument('--dataset', type=str, default='IP')
+parser.add_argument('--expName', type=str, default='SMSP')
+parser.add_argument('--dataset', type=str, default='SMSP')
 parser.add_argument('--opt', type=str, default='opt')
-parser.add_argument('--epoch', type=int, default=50)
+parser.add_argument('--epoch', type=int, default=2)
 parser.add_argument('--PE', type=str, default='Y')
 args = parser.parse_args()
 
@@ -30,7 +30,6 @@ args = parser.parse_args()
 LEARNING_RATE = 0.001
 NB_EPOCHS = args.epoch
 PRT_FREQUENCY = 1
-BATCH_SIZE = 1
 TBATCH = 1
 NUM_WORKERS = 0
 OPT = args.opt
@@ -57,14 +56,11 @@ random.shuffle(sample_files)
 train_files = sample_files[: int(0.8 * len(sample_files))]
 valid_files = sample_files[int(0.8 * len(sample_files)) :]
 
-#copy evaluation instances
-#for valid_file in valid_files:
-#   shutil.copy(valid_file,os.path.join('evaluation',os.path.basename(valid_file)))
 
 train_data = MIPDataset(train_files,DIR_BG,REORDER,ADDPOS)
-train_loader = torch.utils.data.DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS)
+train_loader = torch.utils.data.DataLoader(train_data, batch_size=1, shuffle=True, num_workers=NUM_WORKERS)
 valid_data = MIPDataset(valid_files,DIR_BG,REORDER,ADDPOS)
-valid_loader = torch.utils.data.DataLoader(valid_data, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS)
+valid_loader = torch.utils.data.DataLoader(valid_data, batch_size=1, shuffle=False, num_workers=NUM_WORKERS)
 
 
 policy = GNNPolicy(NGROUP).to(DEVICE)
@@ -118,7 +114,7 @@ def process(policy, data_loader, optimizer=None):
             #
             # # compute loss
             with torch.set_grad_enabled(True):
-                opt_func = lexOpt if OPT=='lex' else labelOpt if OPT=='opt' else None
+                opt_func = labelOpt if OPT=='opt' else None
                 X_bar = opt_func(X_hat.detach()[None,:,:], X.clone()[None,:,:],device=DEVICE)[0] if opt_func is not None else X
 
 
@@ -129,6 +125,7 @@ def process(policy, data_loader, optimizer=None):
             loss = pos_loss.sum() + neg_loss.sum()
 
             if optimizer is not None:
+                loss /= TBATCH
                 loss.backward()
 
             if step%TBATCH == TBATCH-1 or step==len(data_loader)-1:
